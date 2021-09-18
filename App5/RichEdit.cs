@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -22,12 +23,17 @@ namespace App5
             this.DefaultStyleKey = typeof(RichEditBox);
             Loaded += RichEdit_Loaded;
         }
+        protected override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+        }
 
         private void RichEdit_Loaded(object sender, RoutedEventArgs e)
         {
-            var range = this.Document.GetRange(int.MaxValue, int.MaxValue);
-            range.CharacterFormat.ForegroundColor = Colors.Aqua;
-            range.SetText(TextSetOptions.None, "@123");
+            var document = this.Document;
+            document.SetText(TextSetOptions.None, "@12345678");
+            var range = document.GetRange(0, 2);
+            range.CharacterFormat.ForegroundColor = Colors.Red;
         }
     }
 }
